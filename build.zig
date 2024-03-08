@@ -12,20 +12,10 @@ pub fn build(b: *std.Build) void {
         .optimize = optimize,
     });
 
-    const zig_webui = b.dependency("zig-webui", .{
-        .target = target,
-        .optimize = optimize,
-        .enable_tls = false,
-        .is_static = true,
-    });
-
-    exe.root_module.addImport("webui", zig_webui.module("webui"));
-
-    exe.linkLibrary(zig_webui.artifact("webui"));
-
     b.installArtifact(exe);
 
     const run_cmd = b.addRunArtifact(exe);
+
     run_cmd.step.dependOn(b.getInstallStep());
 
     if (b.args) |args| {
@@ -34,6 +24,7 @@ pub fn build(b: *std.Build) void {
 
     const run_step = b.step("run", "Run the app");
     run_step.dependOn(&run_cmd.step);
+
 
     const exe_unit_tests = b.addTest(.{
         .root_source_file = .{ .path = "src/main.zig" },

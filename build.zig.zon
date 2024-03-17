@@ -1,8 +1,10 @@
 .{
-    .name = "Hootowl",
-    .version = "0.0.1",
+    .name = "hootowl",
+    .version = "0.4.2",
     .dependencies = .{},
     .paths = .{
-        "",
+        "build.zig",
+        "build.zig.zon",
+        "src"
     },
 }
